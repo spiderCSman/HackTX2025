@@ -1,35 +1,57 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useState } from "react";
+import Pet from "./components/Pet";
+import purchases from "./data/purchases.json";
+import { analyzePurchase } from "./utils/gemini";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  const [analyzed, setAnalyzed] = useState([]);
+
+  useEffect(() => {
+    async function runAnalysis() {
+      const results = [];
+      for (const p of purchases) {
+        const effect = await analyzePurchase(p.description, p.amount);
+        results.push({ ...p, effect });
+      }
+      setAnalyzed(results);
+    }
+    runAnalysis();
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
+    <main className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-indigo-50 to-slate-200 p-6 space-y-10">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold mb-2">Astronomics 🌙</h1>
+        <p className="text-gray-600">
+          Your celestial companion for mindful finance ✨
         </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
 
-export default App
+      <Pet />
+
+      <section className="w-full max-w-md bg-white rounded-2xl shadow-md p-4 border">
+        <h2 className="text-xl font-semibold mb-4 text-center">
+          Recent Transactions
+        </h2>
+        <ul className="divide-y divide-gray-200">
+          {analyzed.length === 0 && (
+            <p className="text-center text-gray-400">Consulting the stars...</p>
+          )}
+          {analyzed.map((p) => (
+            <li key={p._id} className="py-3 flex flex-col">
+              <div className="flex justify-between">
+                <span className="font-medium text-gray-800">{p.description}</span>
+                <span className="text-gray-600">${p.amount.toFixed(2)}</span>
+              </div>
+              <div className="text-sm text-indigo-500">{p.effect}</div>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <footer className="text-xs text-gray-400 mt-10">
+        <p>Astronomics • HackTX 2025</p>
+      </footer>
+    </main>
+  );
+}
