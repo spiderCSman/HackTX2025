@@ -80,7 +80,7 @@ button:focus-visible {
 /* NAVBAR STYLES (Cleaned and Integrated) */
 /* ==================================== */
 .navbar {
-  background-color: #000;
+  background-color: #101739;
   padding: 10px 20px; /* Added horizontal padding */
   color: white;
   display: flex;

@@ -13,7 +13,7 @@ const Home = () => {
 
       {/* Main Content */}
       <div style={{ padding: '20px' }}>
-        <h1>Welcome to HackTX 2025</h1>
+        <h1>Welcome to Astronomical</h1>
         <p>Hello, {user.name}!</p>
 
         {user.isAdmin && (

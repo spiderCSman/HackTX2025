@@ -7,14 +7,12 @@ const NavBar = () => {
 
   return (
     <nav
-      // 🛑 FIXED: Replaced inline style with CSS class 'navbar'
       className="navbar" 
     >
-      <h2>HackTX 2025</h2>
+      <h2>Astronomical</h2>
       <div>
         <button
           onClick={() => navigate('/')}
-          // 🛑 FIXED: Removed inline style entirely, now relies on CSS selector '.navbar button'
         >
           Sign Out
         </button>
