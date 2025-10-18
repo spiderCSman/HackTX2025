@@ -22,3 +22,12 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Node / Vite stuff
+node_modules/
+dist/
+.vite/
+
+# Environment variables
+.env
+.env.*
