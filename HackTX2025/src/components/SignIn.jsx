@@ -1,10 +1,24 @@
 import React, { useState } from 'react';
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import './index.css';
+import SignIn from './components/SignIn.jsx';
+import Home from './components/Home.jsx';
 
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-
+    const adminCredentials = {
+        email: 'admin@example.com',
+        password: 'admin'
+    };
     const handleSubmit = (e) => {
+        if (email === adminCredentials.email && password === adminCredentials.password) {
+            window.location.href = '/home';
+        } else {
+            alert('Invalid credentials');
+        }
         e.preventDefault();
         // Handle sign-in logic here
         console.log('Email:', email);
@@ -40,5 +54,16 @@ const SignIn = () => {
         </div>
     );
 };
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<SignIn />} />
+        <Route path="/home" element={<Home user={{ name: 'Admin', isAdmin: true }} />} />
+      </Routes>
+    </BrowserRouter>
+  </StrictMode>,
+);
 
 export default SignIn;
