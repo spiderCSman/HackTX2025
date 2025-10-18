@@ -1,29 +1,22 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const SignIn = () => {
+const CreateAccount = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
 
-  const adminCredentials = {
-    email: 'admin@example.com',
-    password: 'admin',
-  };
-
-  const handleSubmit = (e) => {
+  const handleCreateAccount = (e) => {
     e.preventDefault();
-    if (email === adminCredentials.email && password === adminCredentials.password) {
-      navigate('/home', { state: { user: { name: 'Admin', isAdmin: true } } });
-    } else {
-      alert('Invalid credentials');
-    }
+    // Simulate account creation logic
+    alert(`Account created for ${email}`);
+    navigate('/');
   };
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', width: '300px' }}>
-        <h2>Sign In</h2>
+      <form onSubmit={handleCreateAccount} style={{ display: 'flex', flexDirection: 'column', width: '300px' }}>
+        <h2>Create Account</h2>
         <label htmlFor="email">Email:</label>
         <input
           type="email"
@@ -43,18 +36,18 @@ const SignIn = () => {
           style={{ marginBottom: '10px', padding: '8px' }}
         />
         <button type="submit" style={{ padding: '10px', backgroundColor: '#007BFF', color: 'white', border: 'none', cursor: 'pointer' }}>
-          Sign In
+          Create Account
         </button>
         <button
           type="button"
-          onClick={() => navigate('/create-account')}
-          style={{ marginTop: '10px', padding: '10px', backgroundColor: '#28a745', color: 'white', border: 'none', cursor: 'pointer' }}
+          onClick={() => navigate('/')}
+          style={{ marginTop: '10px', padding: '10px', backgroundColor: '#6c757d', color: 'white', border: 'none', cursor: 'pointer' }}
         >
-          Create Account
+          Back to Sign In
         </button>
       </form>
     </div>
   );
 };
 
-export default SignIn;
+export default CreateAccount;
