@@ -1,20 +1,31 @@
-import React from 'react';
+// src/components/Home.jsx
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import NavBar from './NavBar';
 import Tarot from './Tarot';
 
 const Home = () => {
   const location = useLocation();
-  const user = location.state?.user || { name: 'Guest', isAdmin: false };
+  const [user, setUser] = useState(location.state?.user || null);
+
+  useEffect(() => {
+    console.log('User loaded into Home:', user);
+  }, [user]);
+
+  if (!user) {
+    return (
+      <div style={{ textAlign: 'center', marginTop: '100px', color: '#fff' }}>
+        <h2>Loading user data...</h2>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      {/* Navigation Bar */}
+    <div style={{ color: '#fff', minHeight: '100vh', background: '#0d1117' }}>
       <NavBar />
-
-      {/* Main Content */}
       <div style={{ padding: '20px' }}>
         <h1>Welcome to Astronomical</h1>
+<<<<<<< HEAD
         <p>Hello, {user.name}!</p>
         <div> 
         <div
@@ -30,12 +41,22 @@ const Home = () => {
         </div>
         {/*{user.isAdmin && (
           <div style={{ marginTop: '20px', border: '1px solid #ccc', padding: '10px' }}>
+=======
+        <p>Hello, {user.username}!</p>
+
+        {user.isAdmin && (
+          <div
+            style={{
+              marginTop: '20px',
+              border: '1px solid #ccc',
+              padding: '10px',
+              borderRadius: '10px',
+              background: '#161b22',
+            }}
+          >
+>>>>>>> origin/Miguels-Branch
             <h2>Admin Dashboard</h2>
-            <ul>
-              <li>Manage Users</li>
-              <li>View Reports</li>
-              <li>System Settings</li>
-            </ul>
+            <p>You have administrator privileges.</p>
           </div>
 
         )}

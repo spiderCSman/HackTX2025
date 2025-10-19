@@ -4,53 +4,131 @@ import { useNavigate } from 'react-router-dom';
 const SignIn = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const adminCredentials = {
-    email: 'admin@example.com',
-    password: 'admin',
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email === adminCredentials.email && password === adminCredentials.password) {
-      navigate('/home', { state: { user: { name: 'Admin', isAdmin: true } } });
-    } else {
-      alert('Invalid credentials');
+    setLoading(true);
+
+    try {
+      const res = await fetch('http://localhost:5000/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+      if (res.ok) {
+        navigate('/home', {
+          state: {
+            user: {
+              username: data.username,
+              email: data.email,
+              isAdmin: data.isAdmin,
+            },
+          },
+        });
+      } else {
+        alert(data.message || 'Invalid credentials.');
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      alert('Login failed. Check your network or server connection.');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', width: '300px' }}>
-        <h2>Sign In</h2>
-        <label htmlFor="email">Email:</label>
+    <div
+      style={{
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: 'linear-gradient(180deg, #0d1117 0%, #161b22 100%)',
+        color: '#fff',
+      }}
+    >
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          backgroundColor: '#161b22',
+          padding: '2rem',
+          borderRadius: '10px',
+          width: '320px',
+          boxShadow: '0px 0px 15px rgba(0, 0, 0, 0.4)',
+        }}
+      >
+        <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>Sign In</h2>
+
+        <label>Email:</label>
         <input
           type="email"
-          id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          style={{ marginBottom: '10px', padding: '8px' }}
+          style={{
+            width: '100%',
+            padding: '10px',
+            marginBottom: '15px',
+            borderRadius: '5px',
+            border: '1px solid #30363d',
+            backgroundColor: '#0d1117',
+            color: '#fff',
+          }}
         />
-        <label htmlFor="password">Password:</label>
+
+        <label>Password:</label>
         <input
           type="password"
-          id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          style={{ marginBottom: '10px', padding: '8px' }}
+          style={{
+            width: '100%',
+            padding: '10px',
+            marginBottom: '20px',
+            borderRadius: '5px',
+            border: '1px solid #30363d',
+            backgroundColor: '#0d1117',
+            color: '#fff',
+          }}
         />
-        <button type="submit" style={{ padding: '10px', backgroundColor: '#007BFF', color: 'white', border: 'none', cursor: 'pointer' }}>
-          Sign In
+
+        <button
+          type="submit"
+          disabled={loading}
+          style={{
+            width: '100%',
+            padding: '10px',
+            backgroundColor: loading ? '#23863680' : '#238636',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            color: '#fff',
+            fontWeight: 'bold',
+          }}
+        >
+          {loading ? 'Signing in...' : 'Sign In'}
         </button>
+
         <button
           type="button"
           onClick={() => navigate('/create-account')}
-          style={{ marginTop: '10px', padding: '10px', backgroundColor: '#28a745', color: 'white', border: 'none', cursor: 'pointer' }}
+          style={{
+            marginTop: '10px',
+            width: '100%',
+            padding: '10px',
+            backgroundColor: '#30363d',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            color: '#fff',
+          }}
         >
-          Create Account
+          Create an Account
         </button>
       </form>
     </div>
