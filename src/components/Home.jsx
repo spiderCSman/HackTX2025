@@ -25,7 +25,6 @@ const Home = () => {
       <NavBar />
       <div style={{ padding: '20px' }}>
         <h1>Welcome to Astronomical</h1>
-<<<<<<< HEAD
         <p>Hello, {user.name}!</p>
         <div> 
         <div
@@ -41,20 +40,6 @@ const Home = () => {
         </div>
         {/*{user.isAdmin && (
           <div style={{ marginTop: '20px', border: '1px solid #ccc', padding: '10px' }}>
-=======
-        <p>Hello, {user.username}!</p>
-
-        {user.isAdmin && (
-          <div
-            style={{
-              marginTop: '20px',
-              border: '1px solid #ccc',
-              padding: '10px',
-              borderRadius: '10px',
-              background: '#161b22',
-            }}
-          >
->>>>>>> origin/Miguels-Branch
             <h2>Admin Dashboard</h2>
             <p>You have administrator privileges.</p>
           </div>
