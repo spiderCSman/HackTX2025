@@ -2,46 +2,142 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const CreateAccount = () => {
+  const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleCreateAccount = (e) => {
+  const handleCreateAccount = async (e) => {
     e.preventDefault();
-    // Simulate account creation logic
-    alert(`Account created for ${email}`);
-    navigate('/');
+    setLoading(true);
+
+    try {
+      const res = await fetch('http://localhost:5000/api/create-account', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+        alert('✅ Account created successfully! You can now sign in.');
+        navigate('/');
+      } else {
+        alert(`⚠️ ${data.message || 'Error creating account.'}`);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('❌ Failed to create account. Check your network or server.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-      <form onSubmit={handleCreateAccount} style={{ display: 'flex', flexDirection: 'column', width: '300px' }}>
-        <h2>Create Account</h2>
-        <label htmlFor="email">Email:</label>
+    <div
+      style={{
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: 'linear-gradient(180deg, #0d1117 0%, #161b22 100%)',
+        color: '#fff',
+      }}
+    >
+      <form
+        onSubmit={handleCreateAccount}
+        style={{
+          backgroundColor: '#161b22',
+          padding: '2rem',
+          borderRadius: '10px',
+          width: '320px',
+          boxShadow: '0px 0px 15px rgba(0, 0, 0, 0.4)',
+        }}
+      >
+        <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>Create Account</h2>
+
+        <label>Username:</label>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+          style={{
+            width: '100%',
+            padding: '10px',
+            marginBottom: '15px',
+            borderRadius: '5px',
+            border: '1px solid #30363d',
+            backgroundColor: '#0d1117',
+            color: '#fff',
+          }}
+        />
+
+        <label>Email:</label>
         <input
           type="email"
-          id="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
-          style={{ marginBottom: '10px', padding: '8px' }}
+          style={{
+            width: '100%',
+            padding: '10px',
+            marginBottom: '15px',
+            borderRadius: '5px',
+            border: '1px solid #30363d',
+            backgroundColor: '#0d1117',
+            color: '#fff',
+          }}
         />
-        <label htmlFor="password">Password:</label>
+
+        <label>Password:</label>
         <input
           type="password"
-          id="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
-          style={{ marginBottom: '10px', padding: '8px' }}
+          style={{
+            width: '100%',
+            padding: '10px',
+            marginBottom: '20px',
+            borderRadius: '5px',
+            border: '1px solid #30363d',
+            backgroundColor: '#0d1117',
+            color: '#fff',
+          }}
         />
-        <button type="submit" style={{ padding: '10px', backgroundColor: '#007BFF', color: 'white', border: 'none', cursor: 'pointer' }}>
-          Create Account
+
+        <button
+          type="submit"
+          disabled={loading}
+          style={{
+            width: '100%',
+            padding: '10px',
+            backgroundColor: loading ? '#23863680' : '#238636',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            color: '#fff',
+          }}
+        >
+          {loading ? 'Creating...' : 'Create Account'}
         </button>
+
         <button
           type="button"
           onClick={() => navigate('/')}
-          style={{ marginTop: '10px', padding: '10px', backgroundColor: '#6c757d', color: 'white', border: 'none', cursor: 'pointer' }}
+          style={{
+            marginTop: '10px',
+            width: '100%',
+            padding: '10px',
+            backgroundColor: '#6c757d',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            color: '#fff',
+          }}
         >
           Back to Sign In
         </button>

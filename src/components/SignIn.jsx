@@ -1,4 +1,3 @@
-// src/components/SignIn.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,8 +19,6 @@ const SignIn = () => {
       });
 
       const data = await res.json();
-      console.log('Login response:', data);
-
       if (res.ok) {
         navigate('/home', {
           state: {
@@ -111,9 +108,27 @@ const SignIn = () => {
             borderRadius: '5px',
             cursor: 'pointer',
             color: '#fff',
+            fontWeight: 'bold',
           }}
         >
           {loading ? 'Signing in...' : 'Sign In'}
+        </button>
+
+        <button
+          type="button"
+          onClick={() => navigate('/create-account')}
+          style={{
+            marginTop: '10px',
+            width: '100%',
+            padding: '10px',
+            backgroundColor: '#30363d',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            color: '#fff',
+          }}
+        >
+          Create an Account
         </button>
       </form>
     </div>
