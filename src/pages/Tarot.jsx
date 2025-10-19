@@ -108,8 +108,14 @@ export default function Tarot() {
         setHasDrawn(false);
 
         try {
-            const prompt = "Draw three random tarot cards (Major or Minor Arcana) for a general reading. For each card, provide its name, whether it is Major or Minor Arcana, a brief one-sentence summary of its meaning, and a single relevant emoji. Do not include introductory or concluding text, only the JSON structure.";
-
+            const prompt = `
+            Generate a three-card tarot reading for a stock market outlook. Each card should represent a data-driven signal or trend relevant to financial analysis, interpreted mystically. For each card, provide:
+            1. "name": The name of the Major or Minor Arcana tarot card (e.g., 'The Tower', 'Five of Swords').
+            2. "arcana": The type of arcana, either 'Major' or 'Minor'.
+            3. "summary": A concise, one-sentence mystical interpretation of the card's meaning as it relates to stock market trends or investor sentiment (e.g., "The Fool signifies new opportunities or risky trades ahead.", "The Tower warns of sudden market drops or unexpected upheavals.", "The Star indicates promising growth, optimism, or a period of recovery.", "The Hermit suggests a time for caution, observation, or holding investments.").
+            4. "emoji": A single, relevant emoji for the card.
+            Do not include introductory or concluding text, only the JSON structure.
+            `;
             // --- IMPORTANT CHANGE HERE ---
             // Specify 'gemini-2.5-flash' as the model
             const model = genAI.getGenerativeModel({
