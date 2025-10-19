@@ -25,7 +25,7 @@ const Home = () => {
       <NavBar />
       <div style={{ padding: '20px' }}>
         <h1>Welcome to Astronomical</h1>
-        <p>Hello, {user.name}!</p>
+        <p>Hello, {user.username}!</p>
         <div> 
         <div
             style={{
