@@ -5,6 +5,7 @@ import CreateAccount from "./pages/CreateAccount";
 import Home from "./pages/Home";
 import Stocks from "./pages/Stocks";
 import Tarot from "./pages/Tarot";
+import Profile from "./pages/Profile";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/stocks" element={<Stocks />} />
         <Route path="/tarot" element={<Tarot />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );
