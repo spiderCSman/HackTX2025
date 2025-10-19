@@ -1,3 +1,4 @@
+// src/components/SignIn.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -19,9 +20,18 @@ const SignIn = () => {
       });
 
       const data = await res.json();
+      console.log('Login response:', data);
+
       if (res.ok) {
-        alert('Login successful!');
-        navigate('/home', { state: { user: data.userId } });
+        navigate('/home', {
+          state: {
+            user: {
+              username: data.username,
+              email: data.email,
+              isAdmin: data.isAdmin,
+            },
+          },
+        });
       } else {
         alert(data.message || 'Invalid credentials.');
       }
@@ -34,22 +44,28 @@ const SignIn = () => {
   };
 
   return (
-    <div style={{
-      height: '100vh',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      background: 'linear-gradient(180deg, #0d1117 0%, #161b22 100%)',
-      color: '#fff',
-    }}>
-      <form onSubmit={handleSubmit} style={{
-        backgroundColor: '#161b22',
-        padding: '2rem',
-        borderRadius: '10px',
-        width: '320px',
-        boxShadow: '0px 0px 15px rgba(0, 0, 0, 0.4)',
-      }}>
+    <div
+      style={{
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        background: 'linear-gradient(180deg, #0d1117 0%, #161b22 100%)',
+        color: '#fff',
+      }}
+    >
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          backgroundColor: '#161b22',
+          padding: '2rem',
+          borderRadius: '10px',
+          width: '320px',
+          boxShadow: '0px 0px 15px rgba(0, 0, 0, 0.4)',
+        }}
+      >
         <h2 style={{ textAlign: 'center', marginBottom: '1rem' }}>Sign In</h2>
+
         <label>Email:</label>
         <input
           type="email"
@@ -66,6 +82,7 @@ const SignIn = () => {
             color: '#fff',
           }}
         />
+
         <label>Password:</label>
         <input
           type="password"
@@ -82,6 +99,7 @@ const SignIn = () => {
             color: '#fff',
           }}
         />
+
         <button
           type="submit"
           disabled={loading}
