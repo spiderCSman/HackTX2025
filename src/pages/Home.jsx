@@ -1,9 +1,30 @@
+import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
+import NavBar from "../components/NavBar";
 
 export default function Home() {
+  const location = useLocation();
+  const [user, setUser] = useState(location.state?.user || null);
+
+  useEffect(() => {
+    console.log("User loaded into Home:", user);
+  }, [user]);
+
+  if (!user) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-[#0d1117] text-white">
+        <h2>Loading user data...</h2>
+      </div>
+    );
+  }
+
   return (
-    <main className="flex flex-col lg:flex-row items-center justify-center gap-16 px-10 py-20 min-h-screen 
-    bg-gradient-to-b from-[#080015] via-[#0c0130] to-black text-white relative overflow-hidden">
+    <main
+      className="flex flex-col lg:flex-row items-center justify-center gap-16 px-10 py-20 min-h-screen 
+      bg-gradient-to-b from-[#080015] via-[#0c0130] to-black text-white relative overflow-hidden"
+    >
+      <NavBar />
 
       {/* Animated nebula background (subtle motion layers) */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,200,0.05),transparent_70%)] blur-3xl animate-pulse" />
@@ -19,7 +40,12 @@ export default function Home() {
         >
           ⭐
         </motion.div>
-        <p className="text-lg mt-6 italic text-slate-300 max-w-sm">
+
+        <h2 className="text-2xl mt-6 font-bold text-yellow-300">
+          Hello, {user.username || "Traveler"}!
+        </h2>
+
+        <p className="text-lg mt-3 italic text-slate-300 max-w-sm">
           “Your star shines brightest when your balance does too.”
         </p>
       </section>

@@ -1,10 +1,14 @@
-export default function Landing({ setPage }) {
+import { useNavigate } from "react-router-dom";
+
+export default function Landing() {
+  const navigate = useNavigate();
+
   return (
     <main
       className="flex flex-col md:flex-row items-center justify-center gap-8 px-8 py-16 min-h-screen 
       bg-cover bg-center text-yellow-100"
       style={{
-        backgroundImage: "url('/assets/space-bg-placeholder.jpg')", // 🪐 replace this later
+        backgroundImage: "url('/assets/space-bg-placeholder.jpg')", // 🪐 replace later
       }}
     >
       {/* LEFT — image */}
@@ -26,14 +30,14 @@ export default function Landing({ setPage }) {
 
         <div className="flex flex-col gap-4 items-center md:items-start">
           <button
-            onClick={() => setPage("home")}
+            onClick={() => navigate("/signin")}
             className="w-48 py-3 bg-gradient-to-b from-yellow-200 to-yellow-400 text-black font-semibold rounded-xl 
             shadow-[0_0_30px_rgba(255,255,150,0.4)] hover:scale-105 transition-transform"
           >
             Sign In
           </button>
           <button
-            onClick={() => setPage("home")}
+            onClick={() => navigate("/create-account")}
             className="w-48 py-3 bg-gradient-to-b from-yellow-400 to-yellow-600 text-black font-semibold rounded-xl 
             shadow-[0_0_30px_rgba(255,255,150,0.4)] hover:scale-105 transition-transform"
           >
