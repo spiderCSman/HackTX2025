@@ -123,3 +123,48 @@ button:focus-visible {
   background-color: #f0f0f0; /* Less white on hover */
   border-color: transparent; /* Ensure no blue border conflict */
 }
+
+/* ==================================== */
+/* TAROT COMPONENT STYLES */
+/* ==================================== */
+/* Center all tarot content */
+.tarot-wrap {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* centers horizontally */
+  
+  text-align: center;
+  color: #e6e8ec;
+  padding: 2rem;
+}
+
+/* Make the row centered and even */
+.tarot-row {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;  /* centers the row */
+  align-items: center;      /* centers cards vertically */
+  gap: 1rem;
+  width: 100%;
+  overflow-x: auto;         /* scrolls horizontally if needed */
+  padding: 1rem 0;
+}
+
+.tarot-card {
+  flex: 0 0 clamp(200px, 24vw, 260px);
+}
+
+/* Optional: center text and buttons */
+.tarot-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  top: auto;
+}
