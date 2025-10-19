@@ -1,25 +1,46 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
+import NavBar from './NavBar';
+import Tarot from './Tarot';
 
 const Home = () => {
   const location = useLocation();
   const user = location.state?.user || { name: 'Guest', isAdmin: false };
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Welcome to HackTX 2025</h1>
-      <p>Hello, {user.name}!</p>
+    <div>
+      {/* Navigation Bar */}
+      <NavBar />
 
-      {user.isAdmin && (
-        <div style={{ marginTop: '20px', border: '1px solid #ccc', padding: '10px' }}>
-          <h2>Admin Dashboard</h2>
-          <ul>
-            <li>Manage Users</li>
-            <li>View Reports</li>
-            <li>System Settings</li>
-          </ul>
+      {/* Main Content */}
+      <div style={{ padding: '20px' }}>
+        <h1>Welcome to Astronomical</h1>
+        <p>Hello, {user.name}!</p>
+        <div> 
+        <div
+            style={{
+              width: 'full',
+              height: 'full',
+              padding: '10px',
+            }}
+          >
+            <Tarot />
+
+          </div>
         </div>
-      )}
+        {/*{user.isAdmin && (
+          <div style={{ marginTop: '20px', border: '1px solid #ccc', padding: '10px' }}>
+            <h2>Admin Dashboard</h2>
+            <ul>
+              <li>Manage Users</li>
+              <li>View Reports</li>
+              <li>System Settings</li>
+            </ul>
+          </div>
+
+        )}
+          */}
+      </div>
     </div>
   );
 };
