@@ -1,7 +1,0 @@
-@import "tailwindcss";
-
-@layer base {
-  body {
-    @apply m-0 font-[Inter] bg-gradient-to-b from-[#0a0025] via-[#0f033a] to-black text-yellow-100;
-  }
-}
